@@ -2,6 +2,7 @@
 """lifo_cache"""
 BaseCaching = __import__('base_caching').BaseCaching
 
+
 class LIFOCache(BaseCaching):
     """ Class that inherits from BaseCaching and is a caching system """
     def __init__(self):
