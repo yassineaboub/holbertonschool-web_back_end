@@ -5,11 +5,12 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 class LRUCache(BaseCaching):
     """
-    Create a class LRUCache that inherits
+    class LRUCache that inherits
     from BaseCaching and is a caching system
     """
 
     def __init__(self):
+        """ Initiliazing """
         super().__init__()
         self.keys = []
 
