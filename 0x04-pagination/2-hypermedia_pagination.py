@@ -57,4 +57,3 @@ class Server:
                 'total_pages': total_pages,
                 }
         return data
-
