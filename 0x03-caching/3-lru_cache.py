@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""lru cache"""
+"""
+lru cache
+"""
 BaseCaching = __import__('base_caching').BaseCaching
 
 
@@ -10,12 +12,16 @@ class LRUCache(BaseCaching):
     """
 
     def __init__(self):
-        """ Initiliazing """
+        """
+        Initiliazing
+        """
         super().__init__()
         self.keys = []
 
     def put(self, key, item):
-        """assigning to the dictionary"""
+        """
+        assigning to the dictionary
+        """
 
         if key is None or item is None:
             return
@@ -29,7 +35,9 @@ class LRUCache(BaseCaching):
         self.cache_data[key] = item
 
     def get(self, key):
-        """return the value linked"""
+        """
+        return the value linked
+        """
 
         if key is None or key not in self.cache_data:
             return None
