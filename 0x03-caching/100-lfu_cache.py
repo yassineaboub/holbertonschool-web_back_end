@@ -11,7 +11,7 @@ class LFUCache(BaseCaching):
 
     def __init__(self):
         super().__init__()
-        self.keys = []
+        self.keyys = []
 
     def put(self, key, item):
         """
@@ -19,13 +19,13 @@ class LFUCache(BaseCaching):
         """
         if key is not None or item is not None:
             self.cache_data[key] = item
-            if key not in self.keys:
-                self.keys.append(key)
+            if key not in self.keyys:
+                self.keyys.append(key)
             else:
-                self.keys.append(self.keys.pop(
-                    self.keys.index(key)))
-            if len(self.keys) > BaseCaching.MAX_ITEMS:
-                discarded_key = self.keys.pop(0)
+                self.keyys.append(self.keyys.pop(
+                    self.keyys.index(key)))
+            if len(self.keyys) > BaseCaching.MAX_ITEMS:
+                discarded_key = self.keyys.pop(0)
                 del self.cache_data[discarded_key]
                 print('DISCARD: {}'.format(discarded_key))
 
@@ -34,7 +34,7 @@ class LFUCache(BaseCaching):
         Return the value linked
         """
         if key is not None and key in self.cache_data:
-            self.keys.append(self.keys.pop(
-                self.keys.index(key)))
+            self.keyys.append(self.keyys.pop(
+                self.keyys.index(key)))
             return self.cache_data.get(key)
         return None
