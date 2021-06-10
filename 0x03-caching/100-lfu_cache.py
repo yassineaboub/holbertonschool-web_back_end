@@ -23,7 +23,7 @@ class LFUCache(BaseCaching):
                 if len(self.cache_data) >= self.MAX_ITEMS:
                     minvalue = min(self.f.values())
                     minkeys = [k for k in self.f
-                                if self.f[k] == minvalue]
+                               if self.frequency[k] == min_value]
                     for i in range(len(self.lfu)):
                         if self.lfu[i] in minkeys:
                             break
