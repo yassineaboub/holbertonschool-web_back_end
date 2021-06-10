@@ -1,40 +1,45 @@
 #!/usr/bin/env python3
-"""lfu_cache
-"""
+""" LFU Caching """
 BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LFUCache(BaseCaching):
-    """
-    LFUCache that inherits from BaseCaching
-    """
+    """class LFUCache that inherits from BaseCaching"""
 
     def __init__(self):
+        """initialization"""
         super().__init__()
-        self.keyys = []
+        self.lfu = []
+        self.f = {}
 
     def put(self, key, item):
-        """
-        Assign to the dict
-        """
-        if key is not None or item is not None:
-            self.cache_data[key] = item
-            if key not in self.keyys:
-                self.keyys.append(key)
+        """assign to the dict """
+        if key is not None and item is not None:
+            if key in self.cache_data:
+                self.cache_data[key] = item
+                self.f[key] += 1
+                self.lfu.remove(key)
             else:
-                self.keyys.append(self.keyys.pop(
-                    self.keyys.index(key)))
-            if len(self.keyys) > BaseCaching.MAX_ITEMS:
-                discarded_key = self.keyys.pop(0)
-                del self.cache_data[discarded_key]
-                print('DISCARD: {}'.format(discarded_key))
+                if len(self.cache_data) >= self.MAX_ITEMS:
+                    minvalue = min(self.f.values())
+                    minkeys = [k for k in self.f
+                                if self.f[k] == minvalue]
+                    for i in range(len(self.lfu)):
+                        if self.lfu[i] in minkeys:
+                            break
+                    del self.cache_data[self.lfu[i]]
+                    del self.f[self.lfu[i]]
+                    print("DISCARD:", self.lfu[i])
+                    self.lfu.pop(i)
+                self.cache_data[key] = item
+                self.f[key] = 1
+            self.lfu.append(key)
 
     def get(self, key):
-        """
-        Return the value linked
-        """
-        if key is not None and key in self.cache_data:
-            self.keyys.append(self.keyys.pop(
-                self.keyys.index(key)))
-            return self.cache_data.get(key)
+        """ return the value linked"""
+        if key in self.cache_data:
+            self.lfu.remove(key)
+            self.lfu.append(key)
+            self.f[key] += 1
+            return self.cache_data[key]
         return None
